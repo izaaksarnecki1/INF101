@@ -9,8 +9,11 @@ public class Main {
 
   public static void main(String[] args) {
     // Create a new shell
-    CommandLineInterface shell = new SimpleShell();
-
+//    CommandLineInterface shell = new SimpleShell();
+    SimpleShell shell = new SimpleShell();
+    shell.installCommand(new CmdEcho());
+    shell.installCommand(new CmdExit());
+    shell.installCommand(new CmdLs());
     // Run the shell in the terminal GUI
     Terminal gui = new Terminal(shell);
     gui.run();

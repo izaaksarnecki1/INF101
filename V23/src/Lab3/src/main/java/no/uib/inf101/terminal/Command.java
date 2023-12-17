@@ -4,4 +4,6 @@ public interface Command {
 
     String run(String[] args);
     String getName();
+    default void setContext(Context context) { /* do nothing */ };
+
 }

@@ -68,8 +68,10 @@ public class SimpleShell implements CommandLineInterface{
     return s;
   }
 
-  // TODO 5: Add method to install a command
-
+  public void installCommand(Command command) {
+      command.setContext(this.context);
+      this.allCommands.put(command.getName(), command);
+  }
   //////////////////////////////////////////////////////////////////////
   /// Private methods                                ///////////////////
   /// (helper methods used internally in this class) ///////////////////
@@ -107,14 +109,15 @@ public class SimpleShell implements CommandLineInterface{
    * @return  The output of the command
    */
   private String executeCommand(String commandName, String[] args) {
-    // TODO 6: Call run on Command object for given commandName if present
     // TODO 7-8-9: Remove if's for cd, ls, pwd once installed as commands
-    if (Objects.equals(commandName, "pwd")) {
+    if (this.allCommands.containsKey(commandName)) {
+      return this.allCommands.get(commandName).run(args);
+    } else if (Objects.equals(commandName, "pwd")) {
       return this.doPwd(args);
     } else if (Objects.equals(commandName, "cd")) {
       return this.doCd(args);
-    } else if (Objects.equals(commandName, "ls")) {
-      return this.doLs(args);
+//    } else if (Objects.equals(commandName, "ls")) {
+//      return this.doLs(args);
     } else {
       return "Command not found: \"" + commandName + "\"";
     }
@@ -142,14 +145,14 @@ public class SimpleShell implements CommandLineInterface{
   }
 
   // TODO 9: remove this method and replace it with Command -type object
-  private String doLs(String[] args) {
-    File cwd = this.context.getCwd();
-    String s = "";
-    for (File file : cwd.listFiles()) {
-      s += file.getName();
-      s += " ";
-    }
-    return s;
-  }
+//  private String doLs(String[] args) {
+//    File cwd = this.context.getCwd();
+//    String s = "";
+//    for (File file : cwd.listFiles()) {
+//      s += file.getName();
+//      s += " ";
+//    }
+//    return s;
+//  }
 
 }
