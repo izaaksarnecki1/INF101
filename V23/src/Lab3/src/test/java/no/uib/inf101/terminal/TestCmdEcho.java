@@ -1,27 +1,29 @@
 package Lab3.src.test.java.no.uib.inf101.terminal;
 
+import Lab3.src.main.java.no.uib.inf101.terminal.CmdEcho;
+import Lab3.src.main.java.no.uib.inf101.terminal.Command;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestCmdEcho {
-//  @Test
-//  public void testGetName() {
-//    Command echo = new CmdEcho();
-//    assertEquals("echo", echo.getName());
-//  }
-//
-//  @Test
-//  public void testRun() {
-//    Command echo = new CmdEcho();
-//
-//    String[] args = new String[] {"foo", "bar"};
-//    assertEquals("foo bar ", echo.run(args));
-//
-//    args = new String[] {"hello"};
-//    assertEquals("hello ", echo.run(args));
-//
-//    args = new String[] {};
-//    assertEquals("", echo.run(args));
-//  }
+  @Test
+  public void testGetName() {
+    Command echo = new CmdEcho();
+    assertEquals("echo", echo.getName());
+  }
+
+  @Test
+  public void testRun() {
+    Command echo = new CmdEcho();
+
+    String[] args = new String[] {"foo", "bar"};
+    assertEquals("foo bar ", echo.run(args));
+
+    args = new String[] {"hello"};
+    assertEquals("hello ", echo.run(args));
+
+    args = new String[] {};
+    assertEquals("", echo.run(args));
+  }
 }

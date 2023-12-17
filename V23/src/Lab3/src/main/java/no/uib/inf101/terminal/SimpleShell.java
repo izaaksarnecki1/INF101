@@ -15,6 +15,7 @@ package Lab3.src.main.java.no.uib.inf101.terminal;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,7 +33,8 @@ public class SimpleShell implements CommandLineInterface{
   private final List<String> history = new ArrayList<>();
   /** The command currently being typed */
   private String currentCommand = "";
-  // TODO 4: Create instance variable storing Command objects
+
+  private final HashMap<String, Command> allCommands = new HashMap<>();
 
   //////////////////////////////////////////////////////////////////////
   /// Public instance methods                                     //////
@@ -44,18 +46,8 @@ public class SimpleShell implements CommandLineInterface{
     // TODO 7-8-9: Install core commands SimpleShell supports (pwd, ls, cd)
   }
 
-  // TODO 2: rename method to fit new interface, annotate with @Override
-  // Note: methods with @Override generally do not need javadoc comments,
-  // since the javadoc comment is inherited. You should hence remove the
-  // javadoc comment here unless there is something special about this
-  // implementation. You should remove to-do comments when you are done.
-  /**
-   * Called when a key is pressed.
-   *
-   * @param key The key that was pressed
-   */
   @Override
-  public void aKeyIsPressed(char key) {
+  public void keyPressed(char key) {
     if (key == '\n') {
       this.processCurrentCommandLine();
     } else if (key >= ' ' && key <= '~') {
@@ -65,13 +57,8 @@ public class SimpleShell implements CommandLineInterface{
     }
   }
 
-  // TODO 3: rename method to fit new interface, annotate with @Override
-  /**
-   * Get the text which the terminal should display
-   *
-   * @return the text
-   */
-  public String whatTheScreenLooksLike() {
+  @Override
+  public String getScreenContent() {
     String s = "";
     for (String line : this.history) {
       s += line;
@@ -165,13 +152,4 @@ public class SimpleShell implements CommandLineInterface{
     return s;
   }
 
-  @Override
-  public void keyPressed(char key) {
-
-  }
-
-  @Override
-  public String getScreenContent() {
-    return null;
-  }
 }
