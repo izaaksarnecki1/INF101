@@ -5,6 +5,12 @@ import java.io.File;
 public class CmdLs implements Command{
 
     Context context;
+
+    @Override
+    public String getManual() {
+        return "Lists all files in given directory. ";
+    }
+
     @Override
     public String run(String[] args) {
         File cwd = this.context.getCwd();
@@ -22,5 +28,6 @@ public class CmdLs implements Command{
     }
 
     @Override
-    public setContext
+    public void setContext(Context context) { this.context = context; }
+
 }

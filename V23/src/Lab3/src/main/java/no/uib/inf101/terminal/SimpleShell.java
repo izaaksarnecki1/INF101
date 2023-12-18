@@ -14,10 +14,7 @@ package Lab3.src.main.java.no.uib.inf101.terminal;
 // - kan støtte ubegrenset mange kommandoer
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class SimpleShell implements CommandLineInterface{
 
@@ -43,7 +40,10 @@ public class SimpleShell implements CommandLineInterface{
 
   /** Constructor for SimpleShell */
   public SimpleShell() {
-    // TODO 7-8-9: Install core commands SimpleShell supports (pwd, ls, cd)
+    this.installCommand(new CmdLs());
+    this.installCommand(new CmdPwd());
+    this.installCommand(new CmdCd());
+    this.installCommand(new CmdMan());
   }
 
   @Override
@@ -69,28 +69,24 @@ public class SimpleShell implements CommandLineInterface{
   }
 
   public void installCommand(Command command) {
-      command.setContext(this.context);
-      this.allCommands.put(command.getName(), command);
+    command.setCommandContext(this.allCommands);
+    command.setContext(this.context);
+    this.allCommands.put(command.getName(), command);
   }
   //////////////////////////////////////////////////////////////////////
   /// Private methods                                ///////////////////
   /// (helper methods used internally in this class) ///////////////////
   //////////////////////////////////////////////////////////////////////
 
-  /**
-   * Process the current command line. This entails splitting it into
-   * a command name and arguments; executing the command; and adding
-   * the result to the history.
-   */
   private void processCurrentCommandLine() {
     String result = "";
-    if (this.currentCommand.length() > 0) {
+    if (!this.currentCommand.isEmpty()) {
       String[] args = this.currentCommand.split(" ");
       String commandName = args[0];
       String[] commandArgs = new String[args.length - 1];
       System.arraycopy(args, 1, commandArgs, 0, commandArgs.length);
       result = this.executeCommand(commandName, commandArgs);
-      if (result.length() > 0 && result.charAt(result.length() - 1) != '\n') {
+      if (!result.isEmpty() && result.charAt(result.length() - 1) != '\n') {
         result += '\n';
       }
     }
@@ -109,50 +105,10 @@ public class SimpleShell implements CommandLineInterface{
    * @return  The output of the command
    */
   private String executeCommand(String commandName, String[] args) {
-    // TODO 7-8-9: Remove if's for cd, ls, pwd once installed as commands
     if (this.allCommands.containsKey(commandName)) {
       return this.allCommands.get(commandName).run(args);
-    } else if (Objects.equals(commandName, "pwd")) {
-      return this.doPwd(args);
-    } else if (Objects.equals(commandName, "cd")) {
-      return this.doCd(args);
-//    } else if (Objects.equals(commandName, "ls")) {
-//      return this.doLs(args);
     } else {
       return "Command not found: \"" + commandName + "\"";
     }
   }
-
-  // TODO 7: remove this method and replace it with Command -type object
-  private String doPwd(String[] args) {
-    return this.context.getCwd().getAbsolutePath();
-  }
-
-  // TODO 8: remove this method and replace it with Command -type object
-  private String doCd(String[] args) {
-    if (args.length == 0) {
-      this.context.goToHome();
-      return "";
-    } else if (args.length > 1) {
-      return "cd: too many arguments";
-    }
-    String path = args[0];
-    if (this.context.goToPath(path)) {
-      return "";
-    } else {
-      return "cd: no such file or directory: " + path;
-    }
-  }
-
-  // TODO 9: remove this method and replace it with Command -type object
-//  private String doLs(String[] args) {
-//    File cwd = this.context.getCwd();
-//    String s = "";
-//    for (File file : cwd.listFiles()) {
-//      s += file.getName();
-//      s += " ";
-//    }
-//    return s;
-//  }
-
 }

@@ -13,7 +13,6 @@ public class Main {
     SimpleShell shell = new SimpleShell();
     shell.installCommand(new CmdEcho());
     shell.installCommand(new CmdExit());
-    shell.installCommand(new CmdLs());
     // Run the shell in the terminal GUI
     Terminal gui = new Terminal(shell);
     gui.run();
