@@ -7,9 +7,9 @@ import java.util.List;
 public class ColorGrid implements IColorGrid{
     private Integer row = null;
     private Integer col = null;
-    private ArrayList<CellColor> grid;
+    private final ArrayList<CellColor> grid;
 
-    public ColorGrid(Integer row, Integer col) {
+    public ColorGrid(int row, int col) {
         this.grid = new ArrayList<CellColor>();
         this.row = row;
         this.col = col;
